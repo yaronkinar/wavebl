@@ -2,12 +2,13 @@
   "name": "wavebl",
   "private": true,
   "version": "0.0.0",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:unit": "vite-jest --no-cache"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -16,9 +17,11 @@
     "@mui/material": "^5.13.7",
     "@react-buddy/ide-toolbox": "^2.4.0",
     "@react-buddy/palette-mui": "^5.0.1",
+    "@reduxjs/toolkit": "^1.9.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.45.1"
+    "react-hook-form": "^7.45.1",
+    "react-redux": "^8.1.1"
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",

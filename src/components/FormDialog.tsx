@@ -1,26 +1,43 @@
 import {Button, Dialog, DialogActions, DialogContent, FormControl, TextField} from "@mui/material";
 import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../store.ts";
+import {closeDialog, setDialogValue, setError} from "../features/dialogSlice.ts";
 
-interface FormDialog {
-    open: boolean;
-    onClose: () => void;
-    text: string;
-    onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    error: boolean;
-    onClick: () => void;
-}
 
-export default function FormDialog(props: FormDialog) {
+export default function FormDialog() {
+    const dialog = useSelector((state: RootState) => state.dialog);
+    const dispatch = useDispatch();
+    const hasError = dialog.value.trim().length === 0;
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        dispatch(setError(false))
 
-    return <Dialog open={props.open} onClose={props.onClose}>
+        if (event.target.value.trim().length === 0) {
+            dispatch(setError(true))
+        }
+        dispatch(setDialogValue(event.target.value));
+
+
+    };
+
+    const handleSave = () => {
+
+        console.log(dialog.value);
+
+        dispatch(closeDialog());
+    };
+    const handleClose = () => {
+        dispatch(closeDialog());
+    };
+    return <Dialog open={dialog.open} onClose={handleClose}>
         <DialogContent>
 
             <FormControl>
                 <TextField
-                    value={props.text}
-                    onChange={props.onChange}
-                    error={props.error}
-                    helperText={props.error ? "Please Enter Text" : ""}
+                    value={dialog.value}
+                    onChange={handleChange}
+                    error={hasError}
+                    helperText={hasError ? "Please Enter Text" : ""}
                     label="Text"
                     variant="outlined"
                 />
@@ -28,8 +45,8 @@ export default function FormDialog(props: FormDialog) {
 
         </DialogContent>
         <DialogActions>
-            <Button disabled={props.error} onClick={props.onClose}>Cancel</Button>
-            <Button disabled={props.error} onClick={props.onClick}>Save</Button>
+            <Button disabled={hasError} onClick={handleClose}>Cancel</Button>
+            <Button disabled={hasError} onClick={handleSave}>Save</Button>
         </DialogActions>
     </Dialog>;
 }
