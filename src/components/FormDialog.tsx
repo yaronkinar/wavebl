@@ -4,7 +4,7 @@ import React from "react";
 interface FormDialog {
     open: boolean;
     onClose: () => void;
-    value: string;
+    text: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     error: boolean;
     onClick: () => void;
@@ -17,7 +17,7 @@ export default function FormDialog(props: FormDialog) {
 
             <FormControl>
                 <TextField
-                    value={props.value}
+                    value={props.text}
                     onChange={props.onChange}
                     error={props.error}
                     helperText={props.error ? "Please Enter Text" : ""}

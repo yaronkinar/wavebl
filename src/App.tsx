@@ -9,23 +9,26 @@ function App() {
     const [open, setOpen] = useState<boolean>(false);
     const [value, setValue] = useState<string>('');
 
-    type DialogType = "blank" | "edit"
-    const handleClickOpen = useCallback((type: DialogType) => {
+    type DialogMode = "blank" | "edit"
+    const handleClickOpen = useCallback((type: DialogMode) => {
         if (type === "blank") setValue('')
         if (type === "edit") setValue("Hello")
         setOpen(true);
     }, [setValue, setOpen]);
 
-    const isValidate = value.trim().length === 0;
+    const hasError = value.trim().length === 0;
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setValue(event.target.value);
     }, [setValue]);
 
     const handleSave = useCallback(() => {
-        console.log(value);
+          if(!hasError){
+              console.log(value);
+
+          }
         setOpen(false);
-    }, [value, setOpen]);
+    }, [value, setOpen,hasError]);
 
     const handleClose = useCallback(() => {
         setOpen(false);
@@ -38,7 +41,7 @@ function App() {
                 <Column onClick={() => handleClickOpen("edit")} gridColumn={"5"} buttonLabel="Edit"/>
             </Wrapper>
 
-            <FormDialog open={open} onClose={handleClose} value={value} onChange={handleChange} error={isValidate} onClick={handleSave}/>
+            <FormDialog open={open} onClose={handleClose} text={value} onChange={handleChange} error={hasError} onClick={handleSave}/>
         </div>
     )
 }
