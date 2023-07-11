@@ -1,8 +1,8 @@
 import React from "react";
 import {Box} from "@mui/material";
 
-export default function Wrapper({children}: { children: React.ReactNode }): React.ReactNode{
-    return  (<Box
+export default function Wrapper({children}: { children: React.ReactNode }): React.ReactNode {
+    return (<Box
         sx={{
             display: 'grid',
             gridAutoFlow: 'row',
